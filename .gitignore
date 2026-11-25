@@ -1,0 +1,38 @@
+# ---------------------------------------------------------------------------
+# ALLOWLIST: this repository tracks ONLY the files patched on the live site.
+# It is never a full copy of the site. Everything is ignored by default and
+# each patched file is re-included explicitly below.
+# ---------------------------------------------------------------------------
+
+# 1. Ignore every file, but keep descending into directories so the
+#    explicit re-includes below can match.
+*
+!*/
+
+# 2. Repository docs
+!/.gitignore
+!/README.md
+
+# 3. Patched files (one line per file; keep in sync with README.md)
+!/wp-content/plugins/ajax-search-pro/includes/widgets.php
+!/wp-content/plugins/code-snippets-extended/proc/add_snippet.proc.php
+!/wp-content/plugins/destinations/destinations.php
+!/wp-content/plugins/elfsight-instalink/api/index.php
+!/wp-content/plugins/gtmetrix-for-wordpress/gtmetrix-for-wordpress.php
+!/wp-content/themes/parallelus-go-explore/framework/includes/load-functions.php
+!/wp-content/themes/parallelus-go-explore/single-destination.php
+!/wp-content/themes/parallelus-go-explore/taxonomy-destinations-articles.php
+
+# 4. Never publish, even if a rule above is widened later
+#    (later rules win in .gitignore).
+/wp-config.php
+wp-config*.php
+/.vscode/
+.env
+.env.*
+*.log
+*.sql
+*.sql.gz
+*.wpress
+/wp-content/uploads/
+/wp-content/plugins/destinations/assets/js/
