@@ -12,6 +12,11 @@
 # 2. Repository docs
 !/.gitignore
 !/README.md
+!/CLAUDE.md
+!/docs/ROADMAP.md
+!/docs/roadmap.html
+# CSS changes stored in the WP database, documented as a file (not loaded by the theme)
+!/wp-content/themes/parallelus-go-explore/custom.css
 
 # 3. Patched files (one line per file; keep in sync with README.md)
 !/wp-content/plugins/ajax-search-pro/includes/widgets.php
