@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>visitatlantida.com: roadmap status</title>
+<style>
+:root {
+  --bg: #f7f7f5; --surface: #ffffff; --border: #d9d9d4; --text: #1c1c1c; --muted: #4f4f4f;
+  --done-bg: #dcfce7; --done-fg: #14532d; --done-dot: #15803d;
+  --wip-bg: #fef3c7; --wip-fg: #713f12; --wip-dot: #b45309;
+  --todo-bg: #e5e7eb; --todo-fg: #374151; --todo-dot: #6b7280;
+  --chip-bg: #e0e7ff; --chip-fg: #312e81; --focus: #1d4ed8;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121212; --surface: #1e1e1e; --border: #383838; --text: #ececec; --muted: #b5b5b5;
+    --done-bg: #14532d; --done-fg: #bbf7d0; --done-dot: #4ade80;
+    --wip-bg: #713f12; --wip-fg: #fde68a; --wip-dot: #fbbf24;
+    --todo-bg: #374151; --todo-fg: #e5e7eb; --todo-dot: #9ca3af;
+    --chip-bg: #312e81; --chip-fg: #e0e7ff; --focus: #93c5fd;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #f7f7f5; --surface: #ffffff; --border: #d9d9d4; --text: #1c1c1c; --muted: #4f4f4f;
+  --done-bg: #dcfce7; --done-fg: #14532d; --done-dot: #15803d;
+  --wip-bg: #fef3c7; --wip-fg: #713f12; --wip-dot: #b45309;
+  --todo-bg: #e5e7eb; --todo-fg: #374151; --todo-dot: #6b7280;
+  --chip-bg: #e0e7ff; --chip-fg: #312e81; --focus: #1d4ed8;
+}
+:root[data-theme="dark"] {
+  --bg: #121212; --surface: #1e1e1e; --border: #383838; --text: #ececec; --muted: #b5b5b5;
+  --done-bg: #14532d; --done-fg: #bbf7d0; --done-dot: #4ade80;
+  --wip-bg: #713f12; --wip-fg: #fde68a; --wip-dot: #fbbf24;
+  --todo-bg: #374151; --todo-fg: #e5e7eb; --todo-dot: #9ca3af;
+  --chip-bg: #312e81; --chip-fg: #e0e7ff; --focus: #93c5fd;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 24px 20px 48px; }
+header { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; justify-content: space-between; }
+h1 { margin: 0; font-size: 1.6rem; }
+.sub { margin: 4px 0 0; color: var(--muted); }
+.meta { margin: 8px 0 0; color: var(--muted); font-size: .9rem; }
+button.theme { background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; font: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 12px; margin: 24px 0 12px; }
+.tile { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+.tile .n { font-size: 1.8rem; font-weight: 700; }
+.tile .l { color: var(--muted); font-size: .9rem; }
+.bar { display: flex; height: 14px; border-radius: 7px; overflow: hidden; border: 1px solid var(--border); background: var(--surface); }
+.bar span { display: block; height: 100%; }
+.bar .d { background: var(--done-dot); } .bar .w { background: var(--wip-dot); } .bar .t { background: var(--todo-dot); }
+.legend { color: var(--muted); font-size: .85rem; margin: 6px 0 0; }
+h2 { font-size: 1.15rem; margin: 32px 0 12px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 14px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+.card .top { display: flex; gap: 8px; align-items: center; justify-content: space-between; }
+.code { font-weight: 700; color: var(--muted); font-size: .85rem; }
+.badge { font-size: .78rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; }
+.badge.done { background: var(--done-bg); color: var(--done-fg); }
+.badge.wip { background: var(--wip-bg); color: var(--wip-fg); }
+.badge.todo { background: var(--todo-bg); color: var(--todo-fg); }
+.card h3 { margin: 8px 0 4px; font-size: 1.02rem; }
+.card p { margin: 0 0 8px; color: var(--muted); font-size: .9rem; }
+.card ul { list-style: none; margin: 0; padding: 0; }
+.card li { display: flex; gap: 8px; align-items: baseline; padding: 3px 0; font-size: .9rem; }
+.dot { flex: none; width: 9px; height: 9px; border-radius: 50%; transform: translateY(-1px); }
+.dot.done { background: var(--done-dot); } .dot.wip { background: var(--wip-dot); } .dot.todo { background: var(--todo-dot); }
+.chips { margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap; }
+.chip { background: var(--chip-bg); color: var(--chip-fg); font-size: .78rem; font-weight: 600; padding: 2px 8px; border-radius: 6px; }
+.q { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; font-size: .92rem; }
+.q b { color: var(--muted); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+footer { margin-top: 36px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--border); padding-top: 12px; }
+@media (max-width: 520px) { header { flex-direction: column; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div>
+    <h1>visitatlantida.com: roadmap status</h1>
+    <p class="sub">PHP 8.x migration of an outdated WordPress theme and plugins, and what's still open.</p>
+    <p class="meta">Snapshot: 2026-11-26 · Source of truth: <code>docs/ROADMAP.md</code></p>
+  </div>
+  <button class="theme" type="button" id="themeToggle" aria-label="Toggle light or dark theme">Theme</button>
+</header>
+
+<section aria-labelledby="summary-h">
+  <h2 id="summary-h" class="sr">Summary</h2>
+  <div class="tiles">
+    <div class="tile"><div class="n">26</div><div class="l">Items</div></div>
+    <div class="tile"><div class="n">15</div><div class="l">Completed</div></div>
+    <div class="tile"><div class="n">3</div><div class="l">In progress</div></div>
+    <div class="tile"><div class="n">8</div><div class="l">Upcoming</div></div>
+  </div>
+  <div class="bar" role="progressbar" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100" aria-label="Items completed: 15 of 26 (58%), 3 in progress, 8 upcoming">
+    <span class="d" style="width:57.7%"></span><span class="w" style="width:11.5%"></span><span class="t" style="width:30.8%"></span>
+  </div>
+  <p class="legend">Completed 58% · In progress 12% · Upcoming 31%</p>
+</section>
+
+<h2>Active workstreams</h2>
+<div class="grid">
+  <article class="card">
+    <div class="top"><span class="code">WS2</span><span class="badge wip">In progress</span></div>
+    <h3>Multilingual (WPML)</h3>
+    <p>Language switcher sent destination pages back to Spanish; fixed in code, waiting on a cache purge in production.</p>
+    <ul>
+      <li><span class="dot done"></span><span class="sr">Completed: </span>Switcher fix: match items by language, no override on destinations</li>
+      <li><span class="dot done"></span><span class="sr">Completed: </span>Verified on staging, ES↔EN, all page types</li>
+      <li><span class="dot wip"></span><span class="sr">In progress: </span>Production: purge SiteGround cache (combined JS)</li>
+    </ul>
+    <div class="chips"><span class="chip">PR #1</span></div>
+  </article>
+  <article class="card">
+    <div class="top"><span class="code">WS5</span><span class="badge wip">In progress</span></div>
+    <h3>Hosting, operations and tooling</h3>
+    <p>Environments, logging, safe deploys, the patch repository and the open 502 investigation.</p>
+    <ul>
+      <li><span class="dot done"></span><span class="sr">Completed: </span>Debug logging (log on, display off)</li>
+      <li><span class="dot done"></span><span class="sr">Completed: </span>Staging mirror on dev.</li>
+      <li><span class="dot done"></span><span class="sr">Completed: </span>Safe deploy procedure (compare, staging, read back)</li>
+      <li><span class="dot done"></span><span class="sr">Completed: </span>Public patch repo with allowlist .gitignore</li>
+      <li><span class="dot wip"></span><span class="sr">In progress: </span>Intermittent HTTP 502 (~5% of PHP requests)</li>
+      <li><span class="dot todo"></span><span class="sr">Upcoming: </span>debug.log growth (52 MB, +30 MB in 10 h)</li>
+    </ul>
+    <div class="chips"><span class="chip">PR #1</span></div>
+  </article>
+  <article class="card">
+    <div class="top"><span class="code">WS3</span><span class="badge wip">In progress</span></div>
+    <h3>Front-end styling</h3>
+    <p>CSS stored in the database (Additional CSS and Theme Options, saved per language), documented in custom.css.</p>
+    <ul>
+      <li><span class="dot done"></span><span class="sr">Completed: </span>Hero overlay fills the image</li>
+      <li><span class="dot wip"></span><span class="sr">In progress: </span>Fonts: rules live, but the @import is ignored, so the fonts don't load yet</li>
+      <li><span class="dot todo"></span><span class="sr">Upcoming: </span>Interior hero at 66% of screen height</li>
+      <li><span class="dot todo"></span><span class="sr">Upcoming: </span>Stop loading unused fonts</li>
+      <li><span class="dot todo"></span><span class="sr">Upcoming: </span>Align EN heading sizes with ES</li>
+    </ul>
+  </article>
+  <article class="card">
+    <div class="top"><span class="code">WS4</span><span class="badge todo">Upcoming</span></div>
+    <h3>Plugins and SEO hygiene</h3>
+    <p>Plugin conflicts and an update policy that protects the patches.</p>
+    <ul>
+      <li><span class="dot todo"></span><span class="sr">Upcoming: </span>Yoast SEO Premium 14.7 conflict (wp-admin critical error)</li>
+      <li><span class="dot todo"></span><span class="sr">Upcoming: </span>Update policy for patched plugins and theme</li>
+    </ul>
+  </article>
+</div>
+
+<h2>Completed workstreams</h2>
+<div class="grid">
+  <article class="card">
+    <div class="top"><span class="code">WS1</span><span class="badge done">Completed</span></div>
+    <h3>PHP 8 compatibility</h3>
+    <p>Outdated theme and plugin code patched; no fatals from these files since deploy. Two optional follow-ups.</p>
+    <ul>
+      <li><span class="dot done"></span><span class="sr">Completed: </span>Theme: Runway string offsets</li>
+      <li><span class="dot done"></span><span class="sr">Completed: </span>Theme: count() on WP_Query</li>
+      <li><span class="dot done"></span><span class="sr">Completed: </span>Theme: have_posts() on an array</li>
+      <li><span class="dot done"></span><span class="sr">Completed: </span>Ajax Search Pro 4.0</li>
+      <li><span class="dot done"></span><span class="sr">Completed: </span>Code Snippets Extended 1.4.7</li>
+      <li><span class="dot done"></span><span class="sr">Completed: </span>Elfsight InstaLink 2.1.10</li>
+      <li><span class="dot done"></span><span class="sr">Completed: </span>GTmetrix for WordPress 0.4.8</li>
+      <li><span class="dot done"></span><span class="sr">Completed: </span>Verification: lint 7.4 + 8.6, crawl, logs</li>
+      <li><span class="dot todo"></span><span class="sr">Upcoming: </span>Deprecation cleanup (optional)</li>
+      <li><span class="dot todo"></span><span class="sr">Upcoming: </span>ninja-forms-legacy deprecated code check</li>
+    </ul>
+    <div class="chips"><span class="chip">PR #1</span></div>
+  </article>
+</div>
+
+<h2>Unresolved items</h2>
+<div class="grid">
+  <div class="q"><b>U1</b> Is there a current Yoast SEO Premium license?</div>
+  <div class="q"><b>U2</b> Does SEO → Redirects list any redirects?</div>
+  <div class="q"><b>U3</b> Interior hero: plain 66vh, or max(66vh, 640px)?</div>
+  <div class="q"><b>U4</b> Should EN and ES headings have identical sizes?</div>
+  <div class="q"><b>U5</b> OK to switch PHP 8.6.0 → 8.4 to test the 502s?</div>
+  <div class="q"><b>U6</b> Keep WP_DEBUG_LOG on in production?</div>
+  <div class="q"><b>U7</b> Should the Citybreak CSS rule really style every link (fuchsia, 15px margin)?</div>
+</div>
+
+<footer>Snapshot of 2026-11-26. This page is a view; the source of truth is <code>docs/ROADMAP.md</code>.</footer>
+</div>
+<script>
+(function () {
+  var root = document.documentElement, key = 'va-roadmap-theme';
+  try { var saved = localStorage.getItem(key); if (saved === 'light' || saved === 'dark') root.setAttribute('data-theme', saved); } catch (e) {}
+  document.getElementById('themeToggle').addEventListener('click', function () {
+    var current = root.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    var next = current === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem(key, next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

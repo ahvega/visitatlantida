@@ -1,0 +1,122 @@
+/*
+ * visitatlantida.com: custom CSS changes (DOCUMENTATION ONLY)
+ * ===========================================================================
+ * The theme does NOT load this file (nothing in the theme enqueues a
+ * custom.css). It records the CSS changes made from WP-admin, which live in
+ * the WordPress database, so they can be reviewed, restored or re-applied.
+ *
+ * Where the live CSS is stored:
+ *   [A] Appearance > Customize > Additional CSS
+ *       Printed as <style id="wp-custom-css">, after the theme CSS.
+ *   [B] Theme Options > Custom CSS (Runway option "custom-styles")
+ *       Appended to the end of <style id="theme-style-inline-css">.
+ *   With WPML both are saved separately per language: the ES and EN copies
+ *   are edited independently. Keep both language copies identical.
+ *
+ * Snapshot of the live site: 2026-11-26. See docs/ROADMAP.md (WS3).
+ */
+
+
+/* ---------------------------------------------------------------------------
+ * 1. Site fonts: Inter Tight (body, menu) + Antonio (headings)
+ *    Status: rules LIVE in [B], ES and EN. Fonts NOT LOADING (see note).
+ * ------------------------------------------------------------------------- */
+
+/*
+ * NOTE: in [B] the @import below sits after ~50 other rules of the theme's
+ * inline stylesheet. Browsers ignore an @import that is not at the very top of
+ * a stylesheet, so Inter Tight and Antonio are never downloaded and the site
+ * falls back to the generic sans-serif (checked 2026-11-26: the only Google
+ * Fonts stylesheet requested is Archivo).
+ *
+ * FIX (WP-admin): in [A], ES and EN copies, replace the first line
+ *   @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@200;300;400;500;800&display=swap');
+ * with the @import below (Archivo is unused: the rules that used it are
+ * commented out). Then remove the @import from [B] (it does nothing there).
+ */
+@import url('https://fonts.googleapis.com/css2?family=Antonio:wght@400;500;600;700&family=Inter+Tight:wght@200;300;400;500;600;700;800&display=swap');
+
+body {
+	font-family: "Inter Tight", sans-serif;
+	font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.search-result .search-title,
+.widget-title {
+	font-family: "Antonio", sans-serif;
+	font-weight: 600;
+}
+
+
+/* ---------------------------------------------------------------------------
+ * 2. Hero overlay covers the whole hero image
+ *    Status: LIVE in [B], ES and EN. Verified 2026-11-26: hero height equals
+ *    .bg-overlay height on home (990/990) and inner pages (640/640) at 1920x1080.
+ *
+ *    Before: [B] had `.hero { height: calc(100vh - 90px); }`, which applied to
+ *    EVERY page. Inner heroes grew to the screen height while their
+ *    .bg-overlay stayed at the container height (640px), leaving the bottom of
+ *    the image uncovered. The rules below come AFTER that rule in [B] and
+ *    override it. Only the home hero (.hero-overlap) is full height.
+ * ------------------------------------------------------------------------- */
+
+.hero {
+	height: auto;
+}
+
+.hero.hero-overlap {
+	height: calc(100vh - 90px);
+}
+
+.hero.hero-overlap > .bg-overlay {
+	height: 100%;
+}
+
+
+/* ---------------------------------------------------------------------------
+ * 3. PROPOSED, NOT APPLIED: interior hero at 66% of the screen height
+ *    The theme sets an inline `height: 640px` on .container (option
+ *    header-height-default), hence !important. Simulated on the live site:
+ *      1080px screen: 640 -> 713px    768px screen: 640 -> 507px
+ *      phone (844):   350 -> 557px    (overlay and title follow correctly)
+ *    On screens under ~970px tall plain 66vh is SHORTER than today's 640px;
+ *    use the max() variant to never go below 640px.
+ * ------------------------------------------------------------------------- */
+
+/*
+.hero:not(.hero-overlap) .container {
+	height: 66vh !important;
+}
+*/
+
+/* Alternative: proportional, but never shorter than today
+.hero:not(.hero-overlap) .container {
+	height: max(66vh, 640px) !important;
+}
+*/
+
+
+/* ---------------------------------------------------------------------------
+ * 4. Pre-existing rules these changes interact with (unchanged, for context)
+ * ------------------------------------------------------------------------- */
+
+/*
+ * [A] and [B], both languages: mobile hero height (still active; the proposed
+ * 66vh rule in section 3 wins over it because its selector is more specific).
+ *
+ * @media (max-width: 768px) {
+ *     .hero .container {
+ *         padding-top: 110px !important;
+ *         height: 350px !important;
+ *     }
+ * }
+ *
+ * [A], both languages, last rule: `a, a:hover, a:active` is part of the
+ * selector list, so it applies to EVERY link that no more specific rule
+ * styles (fuchsia, margin-right 15px), not only Citybreak labels. Review
+ * whether this is intended.
+ *
+ * .cb_lbl span, a, a:hover, a:active { margin-right: 15px; color: fuchsia; text-decoration: none; }
+ */

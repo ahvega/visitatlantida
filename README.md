@@ -23,6 +23,7 @@
 - [Modified files](#modified-files)
 - [PHP 8 fixes](#php-8-fixes)
 - [WPML language switcher fix](#wpml-language-switcher-fix)
+- [Style changes (stored in the database)](#style-changes-stored-in-the-database)
 - [Verification](#verification)
 - [Applying and maintaining the patches](#applying-and-maintaining-the-patches)
 - [Known open issues](#known-open-issues)
@@ -207,6 +208,23 @@ $('li.menu-item-language').each(function(index) {
 
 > [!NOTE]
 > SiteGround Optimizer serves this script inside a combined JS file. After changing it, purge the SiteGround cache so the combined file is rebuilt.
+
+## Style changes (stored in the database)
+
+Some front-end fixes were made in WP-admin, not in files:
+
+- *Appearance → Customize → Additional CSS*
+- *Theme Options → Custom CSS*
+
+With WPML, each is saved separately for ES and EN. [`themes/parallelus-go-explore/custom.css`](wp-content/themes/parallelus-go-explore/custom.css) documents them. **The theme does not load that file**; it's a record to review or re-apply from.
+
+| Change | Status |
+|---|---|
+| Hero overlay covers the whole hero image | ✅ live (ES + EN) |
+| Inter Tight (body, menu) + Antonio (headings) | ⚠️ rules live, but the fonts don't load: the `@import` must move to the top of Additional CSS |
+| Interior hero at 66% of the screen height | ⚪ proposed, not applied |
+
+Project status and open items: [docs/ROADMAP.md](docs/ROADMAP.md) (with an HTML view in `docs/roadmap.html`).
 
 ## Verification
 
